@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+    {% if error %}
+        <span color="red">Error: {{ error }}</span>
+    {% endif %}
+    {% if pri_account %}
+
+        <p><strong>Primary Account: {{ pri_account["name"] }} </strong>[<span style="color:blue" id="balance" url="profile">{{ format_money(pri_account["balance"]) }}</span>]</p>
+        </div>
+        <!-- not yet! <a href="/accounts">Add Account</a> -->
+        <form action="/profile" method="post">
+            {% if income %}
+                <table class="mytable">
+                    <thead>
+                        <tr>
+                            <th colspan="4" style="text-align:center" class="tlc trc">Income</th>
+                        </tr>
+                        <tr>
+                            <th>Name</th><th>Amount</th><th>Pay Date</th>
+                            <th style="text-align:center"><span class="tiny">del</span></th>
+                        </tr>
+                    </thead>
+                    {% for pay in income %}
+                        <tr class="{{ pay['freq'].split('-')[0] }}">
+                            <td>{{ pay["name"] }}</td>
+                            <td>{{ format_money(pay["amount"]) }}</td>
+                            <td>{{ pay["payday"].strftime("%m/%d/%y") }}</td>
+                            <td style="text-align:center">
+                                <button type="submit" class="btn btn-info del_but" value="in{{ pay['id'] }}" name="in_delete"><span>X</span></button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <th class="blc">Total Income:</th>
+                        <td class="total">{{ format_money(in_total) }} per month</td>
+                        <th class="brc" colspan="2" style="text-align:center">
+                            <a href="/income"><button type="button" class="btn btn-info add_but">
+                 <!-- + emoji &#x2795; -->
+              <span class="add_text">+</span></button></a>
+                </th>
+                    </tr>
+                </table>
+
+
+            {% if outgoings %}
+                <table class="mytable">
+                    <thead>
+                        <tr>
+                            <th colspan="4" style="text-align:center" class="trc tlc">Outgoings</th>
+                        </tr>
+                        <tr>
+                            <th>Name</th><th>Amount</th><th>Due Date</th>
+                            <th style="text-align:center"><span class="tiny">del</span></th>
+                        </tr>
+                    </thead>
+                    {% for out in outgoings %}
+                        <tr class="def {{ out['category'] }}">
+                            <td>{{ out["name"] }}</td>
+                            <td>{{ format_money(out["amount"]) }}</td>
+                            <td>{{ out["due"].strftime("%m/%d/%y") }}</td>
+                            <td style="text-align:center">
+                                <button type="submit" class="btn btn-info del_but" value="out{{ out['id'] }}" name="out_delete"><span>X</span></button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <th class="blc">Outgoings:</th>
+                        <td class="total" style="text-align:left">{{ format_money(out_total) }} per month</td>
+                        <th class="brc" colspan="2" style="text-align:center">
+                            <a href="/outgoings"><button type="button" class="btn btn-info add_but">
+              <span class="add_text">+</span></button></a>
+            </th>
+                    </tr>
+                </table>
+            {% else %}
+                <div class="small_box alert">
+                <br>
+                <p>Add an<a href="/outgoings"> outgoing</a></p>
+                </div>
+            {% endif %}
+        </form>
+    {% else %}
+                <div class="small_box alert">
+                    <br>
+                    <p>Please <a href="/income">add some income</a> to get started</p>
+                </div>
+
+            {% endif %}
+
+
+        {% else %}
+            <p>You need to configure your financial profile</p>
+            <form action="/profile" method="post" id="account">
+                <div class="form-group">
+                    <input autocomplete=off autofocus class="form-control" type="text" name="name" placeholder="account name" />
+                    <input autocomplete=off class="form-control" type="number" step="any" name="balance" placeholder="account balance" />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-info" type="Submit">Configure</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

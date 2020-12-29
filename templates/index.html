@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <div class="container-fluid">
+    <div class="jumbotron mine">
+        <h2> Hi {{ name }}</h2><br>
+        {% if pri_account["balance"] %}
+            <p class="bigtext">You have {{ format_money(free_money) }} left to spend.</p><br><br>
+
+            <p class="leftalign"><span id="expand">More information...</span></p>
+            <div id="extra" class="hidden leftalign">
+                <p class="lead">You have <span id="balance" url="home">{{ format_money(pri_account["balance"]) }}</span> in {{ pri_account["name"] }}.</p>
+                <p>Incoming: {{ money_in }}</p>
+                <p>Outgoing: {{ money_out }}</p>
+                <p>Next Pay Day: {{ next_pay_date }}</p>
+                <a href="/advanced">See Advanced View</a>
+            </div>
+        {% endif %}
+    </div>
+    </div>
+{% endblock %}

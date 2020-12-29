@@ -1,0 +1,170 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Advanced View
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        {% if past_in or past_out %}
+            <div class="jumbotron alert">
+                <form action="/advanced" method="post">
+                {% if past_in  %}
+                    <p>These incoming funds are still outstanding, please confirm receipt</p>
+                    <table class="mytable">
+                        <thead>
+                            <td class="alert_tab">Name</td><td class="alert_tab">Amount</td><td class="alert_tab">Date</td><td></td>
+                        </thead>
+                        {% for inc in past_in %}
+                            <tr>
+                                <td>{{ inc["name"] }}</td>
+                                <td>{{ format_money(inc["amount"]) }}</td>
+                                <td>{{ inc["payday"] }}</td>
+                                <td>
+                                    <input type="checkbox" id="in{{ inc['id'] }}" name="in{{ inc['id'] }}" value="confirmed">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+
+                {% if past_out  %}
+                    <p><strong>These outgoings are still outstanding, please confirm payment</strong></p>
+                    <table class="mytable">
+                        <thead>
+                            <tr class="alert_tab">
+                                <td>Name</td><td>Amount</td><td colspan="2">Date</td>
+                            </tr>
+                        </thead>
+
+                        {% for out in past_out %}
+                            <tr>
+                                <td>{{ out["name"] }}</td>
+                                <td>{{ format_money(out["amount"]) }}</td>
+                                <td>{{ out["due"] }}</td>
+                                <td>
+                                    <input type="checkbox" id="out{{ out['id'] }}" name="out{{ out['id'] }}" value="confirmed">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+
+                    <div class="form-group">
+                        <tr>
+                            <td></td>
+                            <td><button class="btn btn-secondary btn-sm" type="submit">Confirm</button></td>
+
+                        </tr>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+        <p>Pay Period : {{ pay_period }}</p>
+        <table class="mytable">
+            <thead>
+                <th class="tlc" style="text-align: right;">Date:</th><th colspan=3 class="trc" style="text-align: left;">{{ today }}</th>
+            </thead>
+            <tr>
+                <th colspan=3 style="text-align: center;">Accounts</th>
+                <th></th>
+            </tr>
+            {% for acc in accounts %}
+                <tr class= "{{ acc['category'] }}">
+                    <td>{{ acc["name"] }}</td>
+                    <td colspan="3" style="text-align: left"><span id="balance" url="advanced">{{ format_money(acc["balance"]) }}</span></td>
+                </tr>
+            {% endfor %}
+
+            <form action="/advanced" method ="post">
+                {% if income %}
+                <tr>
+                    <th colspan="3" style="text-align: center">Income</th>
+                    <th style="text-align:center"><span class="tiny">received</span></th>
+                </tr>
+
+                {% for pay in income %}
+                    <tr class = "{{ pay['freq'].split('-')[0] }}">
+                        <td>{{ pay["name"] }}</td>
+                        <td>{{ format_money(pay["amount"]) }}</td>
+                        <td>{{ pay["payday"].split('-')[1] }}-{{ pay["payday"].split('-')[2] }}</td>
+                        <td class="center"><input type="checkbox" id="in{{ pay['id'] }}" name="in{{ pay['id'] }}" value="paid"></td>
+                    </tr>
+                {% endfor %}
+                {% endif %}
+                {% if outgoings %}
+                <tr>
+                    <th colspan="3" style="text-align: center;">Outgoings</th>
+                    <th style="text-align:center"><span class="tiny">paid</span></th>
+                </tr>
+                {% for out in outgoings %}
+                    <tr class = "def {{ out['category'] }}">
+                        <td>{{ out["name"] }}</td>
+                        <td>{{ format_money(out["amount"]) }}</td>
+                        <td>{{ out["due"].split('-')[1] }}-{{ out["due"].split('-')[2] }}</td>
+                        <td style="text-align:center"><input type="checkbox" id="out{{ out['id'] }}" name="out{{ out['id'] }}" value="paid"></td>
+                    </tr>
+                {% endfor %}
+                {% endif %}
+                <tr>
+                    <th class="blc">Leftover:</th>
+                    <th colspan="2">{{ format_money(fun_money) }}</th>
+                    <th class="brc">
+                        {% if income or outgoings %}
+                            <button class="btn btn-info btn-sm" type="submit">update</button>
+                            <input type="hidden" name="update" value="True">
+                        {% endif %}
+                    </th>
+                </tr>
+            </form>
+        </table>
+        <table class="mytable">
+            <form action="/advanced" method="post">
+                <thead>
+                    <th colspan="4" class="tlc trc" style="text-align:center">Pay Date:&nbsp&nbsp {{ next_payday }}</th>
+                </thead>
+
+                {% if next_in %}
+                 <tr>
+                    <th colspan="3" style="text-align: center">Income</th>
+                    <th style="text-align:center"><span class="tiny">received</span></th>
+                </tr>
+
+                {% for pay in next_in %}
+                    <tr class="{{ pay['freq'].split('-')[0] }}">
+                        <td>{{ pay["name"] }}</td>
+                        <td>{{ format_money(pay["amount"]) }}</td>
+                        <td>{{ pay["payday"].split('-')[1] }}-{{ pay["payday"].split('-')[2] }}</td>
+                        <td class="center"><input type="checkbox" id="in{{ pay['id'] }}" name="in{{ pay['id'] }}" value="paid"></td>
+
+                    </tr>
+                {% endfor %}
+                {% endif %}
+                {% if next_out %}
+                 <tr>
+                    <th colspan="3" style="text-align: center;">Outgoings</th>
+                    <th style="text-align:center"><span class="tiny">paid</span></th>
+                </tr>
+                {% for out in next_out %}
+                    <tr class = "def {{ out['category'] }}">
+                        <td>{{ out["name"] }}</td>
+                        <td>{{ format_money(out["amount"]) }}</td>
+                        <td>{{ out["due"].split('-')[1] }}-{{ out["due"].split('-')[2] }}</td>
+                        <td style="text-align:center"><input type="checkbox" id="out{{ out['id'] }}" name="out{{ out['id'] }}" value="paid"></td>
+                    </tr>
+                {% endfor %}
+                {% endif %}
+                <tr>
+                    <th class="blc">Leftover:</th>
+                    <th colspan="2">{{ format_money(next_fun_money) }}</th>
+                    <th class="brc">
+                        {% if next_in or next_out %}
+                            <button class="btn btn-info btn-sm" type="submit">update</button>
+                            <input type="hidden" name="next_update" value="True">
+                        {% endif %}
+                    </th>
+                </tr>
+            </form>
+        </table>
+    </div>
+{% endblock %}

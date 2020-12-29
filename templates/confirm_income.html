@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Confirm
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="jumbtron mine">
+            <form action="/" method="post">
+                <table class="mytable">
+                {% if income %}
+                    <p><strong>Please confirm that you have received the following income</strong></p>
+                    <thead>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                    </thead>
+
+                    {% for pay in income %}
+                        <div class="form-group">
+                            <tr>
+                                <td>{{ pay["name"] }}</td>
+                                <td>{{ format_money(pay["amount"]) }}</td>
+                                <td>{{ pay["payday"] }}</td>
+                                <td>
+                                    <input type="checkbox" id="pay{{ pay['id'] }}" name="pay{{ pay['id'] }}" value="confirmed">
+                                </td>
+                            </tr>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if outgoings %}
+                    <p><strong>Please confirm that you have paid the following outgoings</strong></p>
+                    <thead>
+                        <tr class="alert_tab">
+                        <td>Name</td>
+                        <td>Amount</td>
+                        <td colspan="2">Due Date</td>
+                        </tr>
+                    </thead>
+                    {% for out in outgoings %}
+                        <div class="form-group">
+                            <tr>
+                                <td>{{ out["name"] }}</td>
+                                <td>{{ format_money(out["amount"]) }}</td>
+                                <td>{{ out["due"] }}</td>
+                                <td>
+                                    <input type="checkbox" id="out{{ out['id'] }}" name="out{{ out['id'] }}" value="confirmed">
+                                </td>
+                            </tr>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                    <div class="form-group">
+                        <tr>
+                            <td></td>
+                            <td><button class="btn btn-primary" type="submit">Confirm</button></td>
+                        </tr>
+                    </div>
+                </table>
+            </form>
+        </div>
+    </div>
+{% endblock %}

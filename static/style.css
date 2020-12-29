@@ -1,0 +1,338 @@
+/* outgoings color coded by category for form background */
+.def {background: #999977;} /* default for user specified categories */
+
+.housing{background: #ddbb99;}
+
+.utility{background: #bbbbdd;}
+
+.entertainment{background: #ff80bf;}
+
+.transport{background: #b3ccff;}
+
+.food{background: #adebeb;}
+
+.education{background: #fff0b3;}
+
+.childcare{background: #f0c2e0;}
+
+.repayment{background: #ff6666;}
+
+/* account color coding for form background */
+.Primary{background: #bbbbbb;}
+
+
+/* income color coded by frequency */
+.biweekly{background: #ccff99;}
+
+.monthly{background: #59b300;}
+
+.semimonthly{background: #b3ffb3};
+
+.weekly{background: #e6ff99;}
+
+.quarterly{background: #cccc99;}
+
+.tiny
+{
+    font-size:x-small;
+}
+.small_box
+{
+    width:50%;
+    padding:10px;
+    margin:auto;
+    box-sizing:border-box;
+
+}
+
+
+.total
+{
+    background: #aaddaa;
+}
+
+.hidden
+{
+    display: none;
+}
+
+.mytable
+{
+    display: inline-block;
+    vertical-align: top;
+    margin: auto;
+    padding: 8px;
+    /* border: 1px solid white; */
+    border-radius: 20px;
+    border-collapse: collapse;
+}
+
+td
+{
+    text-align: left;
+    padding: 8px;
+    /*border: 1px solid white;*/
+    border-collapse: collapse;
+}
+
+.add_but
+{
+    width:24px;
+    height:24px;
+    outline:none;
+    /*vertical-align:middle;*/
+    line-height:24px;
+    font-weight:bold;
+    padding:0px 0px 0px 0px;
+    /* margin:auto; */
+    text-align:center;
+
+}
+
+.del_but
+{
+    width:12px;
+    height:12px;
+    padding:0px;
+    vertical-align:middle;
+    line-height:10px;
+    font-weight:bold;
+    font-size:5pt;
+    text-align:center;
+    margin:auto;
+}
+.add_text
+{
+    font-family:monospace;
+    font-size:28pt;
+    position:relative;
+    top:-3px;
+
+}
+
+.center
+{
+    text-align: center;
+}
+
+#balance:hover
+{
+    cursor: pointer;
+}
+
+
+th
+{
+    text-align: left;
+    padding: 8px;
+   /* border: 1px solid #bbbbbb;*/
+    border: none;
+    border-collapse: collapse;
+    background: #aaddaa;
+}
+
+.alert_tab
+{
+    background-color: #ffcccc;
+    font-weight:bold;
+    text-align:center
+}
+.blc
+{
+    border-bottom-left-radius: 10px;
+}
+
+.tlc
+{
+    border-top-left-radius: 10px;
+}
+
+.trc
+{
+    border-top-right-radius: 10px;
+}
+
+.brc
+{
+    border-bottom-right-radius: 10px;
+}
+
+
+#rounded
+{
+    border-radius:60px;
+}
+
+nav .no_pad
+{
+    padding: 0;
+}
+
+body
+{
+    padding-top:50px;
+}
+
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+    text-align: center;
+}
+
+.leftalign
+{
+    text-align: left;
+}
+
+input[type=text], input[type=password], input[type=number], input[type=date]
+{
+    border-radius:60px;
+    margin-top:8px;
+
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.sm_num
+{
+    width: 80px;
+    vertical-align:middle;
+    padding: 0px 0px 0px 10px;
+    margin: 0;
+    outline: none;
+    border-style: none;
+}
+
+.tab_form
+{
+    padding-right: 0;
+    margin-right: 0;
+    display: inline-block;
+}
+input[type=number]:focus.sm_num
+{
+    outline: none;
+    border-radius:60px;
+    padding: 0;
+    margin: 0;
+}
+
+.button
+{
+    border-radius:60px;
+}
+
+.tab_but
+{
+    display:none;
+}
+
+
+.error
+{
+    color:red;
+    text-decoration:bold;
+}
+
+#expand
+{
+    border-bottom:2px dotted lightblue;
+}
+
+#expand:hover
+{
+    cursor:pointer;
+}
+
+.bigtext
+{
+    font-size:x-large;
+}
+
+#navbar
+{
+    font-family: "Montserrat", "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;;
+}
+.navtab
+{
+    /* manilla = #e7c9a9 */
+    background-color:  #e7c9a9;
+     /* make the link look like a file tab */
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 1px;
+    border-right-style: solid;
+}
+
+#navbar .active
+{
+    background-color: #fcfded;
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 1px;
+    border-right-style: solid;
+}
+
+
+
+#navbar a
+{
+    font-size: large;
+    color: black;
+    padding: 6px;
+    text-decoration: off;
+}
+
+body
+{
+    background-color:  #fcfded;
+}
+
+footer
+{
+    text-align: center;
+}
+
+div .mine
+{
+    background-color: #ffccff;
+    border-radius: 10px;
+    padding-top:20px;
+    padding-bottom:20px;
+    box-sizing:border-box;
+}
+
+
+
+.alert
+{
+    background-color: #ffcccc;
+    /*border: 3px dashed;*/
+    box-sizing:border-box;
+    border-color: #ffaaaa;
+    border-radius: 10px;
+}

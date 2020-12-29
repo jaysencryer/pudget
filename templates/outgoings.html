@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Outgoings
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid">
+    <div class="jumbtron mine">
+    {% if error %}
+        <span color="red">Error: {{ error }}</span>
+    {% endif %}
+    <form action="/outgoings" method="post">
+        <div class="form-group">
+            <input autocomplete=off class="form-control" autofocus type="text" name="name" placeholder="Outgoing Name" />
+            <input type="number" class="form-control" name="amount" placeholder="Amount" step="any"/>
+        </div>
+        <div class="form-group">
+            <label for="frequency">Frequency</label>
+            <select class="form-control" name="frequency" id="frequency">
+                {% for freq in frequency %}
+                        <option value="{{ freq['value'] }}">{{ freq["text"] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" name="category" id="category">
+                {% for cat in category %}
+                    <option value="{{ cat['value'] }}">{{ cat["text"] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <input type=text class="form-control" autocomplete=off name="othertext" placeholder="Specify other category"/>
+        </div>
+        {% if accounts|length > 1 %}
+            <div class="form group">
+                <label for="account">Target account</label>
+                <select name="account">
+                {% for acc in accounts %}
+                    <option value="{{ acc['id'] }}">{{ acc['name'] }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        {% else %}
+                <input type="hidden" name="account" value="{{ accounts[0]['id'] }}">
+        {% endif %}
+        <div class="form-group">
+            <label for="duedate">Next Due Date</label>
+
+            <input type="date" class="form-control" name="duedate" />
+            </div>
+            <div class="form-group">
+            <button class="btn btn-info" type="submit">Submit</button>
+            </div>
+
+    </form>
+    </div>
+    </div>
+{% endblock %}

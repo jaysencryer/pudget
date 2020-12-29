@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Account
+{% endblock %}
+
+{% block main %}
+    <form action="/accounts" method="post" id="account">
+        <input autocomplete=off autofocus class="form-control" type="text" name="name" placeholder="account name" />
+        <label for="category">Category</label>
+        <select name="category" id="category">
+            <option value="savings">Savings</option>
+            <option value="qchecking">Checking</option>
+            <option value="reserve">Reserve</option>
+        </select>
+        <input autocomplete=off class="form-control" type="number" name="balance" placeholder="account balance" />
+        <button type="Submit">Submit</button>
+    </form>
+{% endblock %}
